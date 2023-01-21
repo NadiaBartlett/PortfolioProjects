@@ -1,0 +1,50 @@
+Below are several different queries I have written in SQLite to pull various data from a a data set based on the questions asked.
+
+
+--Which 5 days had the most students enroll? The result set should include two columns the start_date column and enrollment_count:
+
+SELECT start_date , count (start_date) as Enrollment_count 
+FROM mock_enrollments
+group by Start_date
+order by Enrollment_count desc
+Limit '5'
+
+--How many students were enrolled on February 1, 2019 in 8th grade? The result set should include one column the enrollment_count column:
+
+-- Create Table Grade_Enrollment
+--AS
+--Select  ('2019-02-01') , grade, count (grade) as Enrollment_Count
+--from mock_enrollments
+--group by grade
+
+Select Enrollment_count
+from Grade_enrollment
+where Grade=8
+
+--Create a running total of of passed assessments by school day starting March 1, 2019. The result set should include two columns titled Date and cumulative_passed_assessment:
+Select Test_date as Date,  count (passed) as cumulative_passed_assessments
+from mock_test_results
+Where Passed=1
+Group By Test_date 
+
+List all of the students with all of their test scores that have valid test dates, format the test_date in a month/day/year format (e.g., 04/10/2022) reformat the Science subject to say "Biology", and the results of the test (if the student passed the test return the text "Passed" or "Not Passed"). The result set should include four columns unique_id,test_date,subject and result:
+
+--Create Table Test_Results
+--AS
+--Select Unique_Id,
+--Case Subject
+--when 'Science' Then 'Biology'
+--END Subject,
+--Case Passed
+--when '0' then 'Not Passed' 
+--when 1 then 'Passed'
+--end Results, 
+--STRFTIME('%m/%d/%Y', Test_date )
+--AS Test_date
+--From mock_test_results
+
+Select *
+from Test_Results
+where Results IS NOT null and Test_date IS NOT null
+
+
